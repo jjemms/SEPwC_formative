@@ -9,6 +9,9 @@ def add_task(task):
     Input - a task to add to the list
     Return - nothing
     """
+    with open(TASK_FILE, "a") as file:
+        file.write(task + "\n")
+        print(f"Task '{task}' added.")
 
 def list_tasks():
     return
