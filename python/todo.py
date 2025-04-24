@@ -1,3 +1,5 @@
+"""A command-line to-do list application that supports adding, listing, and removing tasks"""
+
 import argparse
 import os
 
@@ -6,7 +8,7 @@ NO_TASKS_FOUND_MSG = "No tasks found. Please add a task using -a or --add option
 
 def add_task(task):
     """Add new task to task file"""
-    with open(TASK_FILE, "a") as file:
+    with open(TASK_FILE, "a", encoding="utf-8") as file:
         file.write(task + "\n")
 
 def list_tasks():
@@ -14,7 +16,7 @@ def list_tasks():
     if not os.path.exists(TASK_FILE):
         return NO_TASKS_FOUND_MSG
 
-    with open(TASK_FILE, "r") as file:
+    with open(TASK_FILE, "r", encoding="utf-8") as file:
         lines = [line.strip() for line in file if line.strip()]
 
     if not lines:
@@ -24,14 +26,14 @@ def list_tasks():
     return "\n".join(numbered_tasks)
 
 def remove_task(index):
-    """Remove a task by its number from the task file."""
+    """Remove a task by its number from the task file"""
     if not os.path.exists(TASK_FILE):
         print(NO_TASKS_FOUND_MSG)
         return
 
     # Read all non-empty lines from the file
     # strip() to remove any leading/trailing whitespace
-    with open(TASK_FILE, "r") as file:
+    with open(TASK_FILE, "r", encoding="utf-8") as file:
         tasks = [line.strip() for line in file if line.strip()]
 
     if not tasks:
@@ -48,7 +50,7 @@ def remove_task(index):
 
     # Write remaining tasks back to the file
     if tasks:
-        with open(TASK_FILE, "w") as file:
+        with open(TASK_FILE, "w", encoding="utf-8") as file:
             file.write("\n".join(tasks) + "\n")
         print(f"Task '{removed}' removed successfully.")
         print("Remaining tasks:")
@@ -58,8 +60,8 @@ def remove_task(index):
         os.remove(TASK_FILE)
         print(f"Task '{removed}' removed. No tasks left. File deleted.")
 
-
 def main():
+    """Parse the command-line arguments and run the selected task operation"""
     parser = argparse.ArgumentParser(description="Command-line Todo List")
     parser.add_argument(
             "-a",
