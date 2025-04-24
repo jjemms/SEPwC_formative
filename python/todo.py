@@ -7,22 +7,20 @@ def add_task(task):
     """Add new task to task file"""
     with open(TASK_FILE, "a") as file:
         file.write(task + "\n")
-        print(f"Task '{task}' added.")
 
 def list_tasks():
     """Read tasks from task file and return them as a numbered list"""
     if not os.path.exists(TASK_FILE):
-        print("No tasks found yet.")
+        return "No tasks found."
 
     with open(TASK_FILE, "r") as file:
-        lines = [line.strip() for line in file.readlines() if line.strip()]
-       
-        if not lines:
-            print("No tasks found.")
-        
-        # Create numbered list of tasks
-        numbered_tasks = [f"{idx + 1}. {line}" for idx, line in enumerate(lines)]
-        return "\n".join(numbered_tasks)
+        lines = [line.strip() for line in file if line.strip()]
+
+    if not lines:
+        return "No tasks found."
+
+    numbered_tasks = [f"{idx + 1}. {line}" for idx, line in enumerate(lines)]
+    return "\n".join(numbered_tasks)
 
 def remove_task(index):
     """Remove a task by its number from the task file."""
@@ -31,6 +29,7 @@ def remove_task(index):
         return
 
     # Read all non-empty lines from the file
+    # strip() to remove any leading/trailing whitespace
     with open(TASK_FILE, "r") as file:
         tasks = [line.strip() for line in file if line.strip()]
 
@@ -56,7 +55,7 @@ def remove_task(index):
             print(f"{i}. {task}")
     else:
         os.remove(TASK_FILE)
-        print(f"Task '{removed}' removed. No tasks left – file deleted.")
+        print(f"Task '{removed}' removed. No tasks left. File deleted.")
 
 
 def main():
@@ -80,6 +79,7 @@ def main():
 
     if args.add:
         add_task(args.add)
+        print (f"Task '{args.add}' added successfully.")
     elif args.list:
         tasks = list_tasks()
         print(tasks)
