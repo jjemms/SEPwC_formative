@@ -17,20 +17,16 @@ def list_tasks():
     """Read tasks from task file and return them as a list"""
     if not os.path.exists(TASK_FILE):
         print("No tasks found yet.")
-            
+
     with open(TASK_FILE, "r") as file:
         lines = [line.strip() for line in file.readlines() if line.strip()]
-        if lines:
-            print("Tasks:")
-            for i, line in enumerate(lines):
-                print(f"{i + 1}. {line}")
+       
         if not lines:
             print("No tasks found.")
         
         numbered_tasks = [f"{i + 1}. {line}" for idx, line in enumerate(lines)]
         return "\n".join(numbered_tasks)
-    
-    return
+
 
 
 def remove_task(index):
