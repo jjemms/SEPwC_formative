@@ -2,6 +2,7 @@ import argparse
 import os
 
 TASK_FILE = ".tasks.txt"
+NO_TASKS_FOUND_MSG = "No tasks found. Please add a task using -a or --add option."
 
 def add_task(task):
     """Add new task to task file"""
@@ -11,13 +12,13 @@ def add_task(task):
 def list_tasks():
     """Read tasks from task file and return them as a numbered list"""
     if not os.path.exists(TASK_FILE):
-        return "No tasks found."
+        return NO_TASKS_FOUND_MSG
 
     with open(TASK_FILE, "r") as file:
         lines = [line.strip() for line in file if line.strip()]
 
     if not lines:
-        return "No tasks found."
+        return NO_TASKS_FOUND_MSG
 
     numbered_tasks = [f"{idx + 1}. {line}" for idx, line in enumerate(lines)]
     return "\n".join(numbered_tasks)
@@ -25,7 +26,7 @@ def list_tasks():
 def remove_task(index):
     """Remove a task by its number from the task file."""
     if not os.path.exists(TASK_FILE):
-        print("No tasks found yet.")
+        print(NO_TASKS_FOUND_MSG)
         return
 
     # Read all non-empty lines from the file
