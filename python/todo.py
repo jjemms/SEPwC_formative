@@ -24,9 +24,8 @@ def list_tasks():
         if not lines:
             print("No tasks found.")
         
-        numbered_tasks = [f"{i + 1}. {line}" for idx, line in enumerate(lines)]
+        numbered_tasks = [f"{idx + 1}. {line}" for idx, line in enumerate(lines)]
         return "\n".join(numbered_tasks)
-
 
 
 def remove_task(index):
